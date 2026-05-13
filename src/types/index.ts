@@ -1,4 +1,4 @@
-// Unified type definitions for AccVault system
+// Unified type definitions for LLM AutoBot system
 
 import { Timestamp } from 'firebase/firestore';
 

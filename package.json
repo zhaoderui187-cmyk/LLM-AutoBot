@@ -1,7 +1,7 @@
 {
-  "name": "accvault",
+  "name": "llm-autobot",
   "version": "1.0.0",
-  "description": "AccVault - API Account Manager & Automation Engine",
+  "description": "LLM AutoBot - API Account Manager & Automation Engine",
   "author": "Your Name <your.email@example.com>",
   "license": "MIT",
   "private": false,
@@ -22,8 +22,8 @@
     "pack": "npm run build && electron-builder --win"
   },
   "build": {
-    "appId": "com.accvault.app",
-    "productName": "AccVault",
+    "appId": "com.llm-autobot.app",
+    "productName": "LLM AutoBot",
     "directories": {
       "output": "release"
     },

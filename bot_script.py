@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-AccVault Auto-Registration Bot Framework
+LLM AutoBot Auto-Registration Bot Framework
 =========================================
-This script registers accounts and pushes them to your AccVault.
+This script registers accounts and pushes them to your LLM AutoBot.
 Requirements:
   pip install playwright requests
   playwright install chromium
@@ -38,7 +38,7 @@ except FileNotFoundError:
 
 # ─── Vault Sync ─────────────────────────────────────
 def push_to_vault(email, password, api_key):
-    """Push a newly registered account to AccVault."""
+    """Push a newly registered account to LLM AutoBot."""
     headers = {
         "Authorization": f"Bearer {VAULT_KEY}",
         "X-Backend-Secret": BACKEND_SECRET,
@@ -55,7 +55,7 @@ def push_to_vault(email, password, api_key):
         resp = requests.post(VAULT_URL, json=payload, headers=headers, timeout=10)
         data = resp.json()
         if data.get("success"):
-            print(f"[✓] Synced {email} -> AccVault")
+            print(f"[✓] Synced {email} -> LLM AutoBot")
             return True
         else:
             print(f"[✗] Sync failed: {data}")
@@ -104,7 +104,7 @@ def register_account(proxy=None):
 # ─── Main Loop ──────────────────────────────────────
 def main():
     print("=" * 50)
-    print("AccVault Auto-Registration Bot")
+    print("LLM AutoBot Auto-Registration Bot")
     print("=" * 50)
     
     # Check if we have credentials

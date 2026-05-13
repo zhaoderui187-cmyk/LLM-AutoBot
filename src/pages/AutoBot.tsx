@@ -91,10 +91,10 @@ export function AutoBot() {
 
   const botScript = `#!/usr/bin/env python3
 """
-AccVault Auto-Registration Bot Framework
+LLM AutoBot Auto-Registration Bot Framework
 =========================================
 This script provides the framework for automatically
-registering accounts and pushing them to your AccVault.
+registering accounts and pushing them to your LLM AutoBot.
 
 Requirements: pip install playwright requests
 Setup: playwright install chromium
@@ -111,14 +111,14 @@ VAULT_KEY = "${vaultKey || 'YOUR_VAULT_KEY'}"
 BACKEND_SECRET = "${backendSecret || 'YOUR_BACKEND_SECRET'}"
 TARGET_PLATFORM = "GPT-5.5"
 
-# Proxy pool (loaded from your AccVault proxy list)
+# Proxy pool (loaded from your LLM AutoBot proxy list)
 PROXIES = [
     # {"ip": "1.2.3.4", "port": "8080", "user": "u", "pass": "p"},
 ]
 
 # ─── Vault Sync ─────────────────────────────────────
 def push_to_vault(email, password, api_key):
-    """Push a newly registered account to AccVault."""
+    """Push a newly registered account to LLM AutoBot."""
     headers = {
         "Authorization": f"Bearer {VAULT_KEY}",
         "X-Backend-Secret": BACKEND_SECRET,
@@ -136,7 +136,7 @@ def push_to_vault(email, password, api_key):
                              headers=headers, timeout=10)
         data = resp.json()
         if data.get("success"):
-            print(f"[✓] Synced {email} -> AccVault")
+            print(f"[✓] Synced {email} -> LLM AutoBot")
             return True
         else:
             print(f"[✗] Sync failed: {data}")
@@ -197,7 +197,7 @@ def register_account(proxy=None):
 # ─── Main Loop ──────────────────────────────────────
 def main():
     print("=" * 50)
-    print("AccVault Auto-Registration Bot")
+    print("LLM AutoBot Auto-Registration Bot")
     print("=" * 50)
     
     target_count = 10  # Number of accounts to register

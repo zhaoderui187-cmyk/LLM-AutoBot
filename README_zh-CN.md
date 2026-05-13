@@ -1,8 +1,8 @@
-# AccVault 🛡️
+# LLM AutoBot 🛡️
 
 [![English](https://img.shields.io/badge/Language-English-blue)](README.md) [![简体中文](https://img.shields.io/badge/Language-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-red)](#)
 
-AccVault 是一款现代化的、基于 Apple macOS 设计风格的桌面应用程序。主要用于管理 API 账号库、代理网络配置、API 流量网关路由，以及内置 Python Playwright 引擎的自动化注册机（AutoBot）。
+LLM AutoBot 是一款现代化的、基于 Apple macOS 设计风格的桌面应用程序。主要用于管理 API 账号库、代理网络配置、API 流量网关路由，以及内置 Python Playwright 引擎的自动化注册机（AutoBot）。
 
 ## ✨ 核心特性
 
@@ -42,7 +42,7 @@ npm install
 
 ### 3. 配置 Firebase (数据库)
 
-AccVault 完全依托免费的 Firebase Firestore 来存储账号和代理数据。你需要自己创建一个 Firebase 项目。
+LLM AutoBot 完全依托免费的 Firebase Firestore 来存储账号和代理数据。你需要自己创建一个 Firebase 项目。
 
 **3.1: 创建 Firebase 项目**
 1. 访问 [Firebase Console](https://console.firebase.google.com/)。
@@ -57,7 +57,7 @@ AccVault 完全依托免费的 Firebase Firestore 来存储账号和代理数据
 **3.3: 获取 Web 配置文件**
 1. 点击左上角的齿轮图标进入 **项目设置 (Project Settings)** -> **常规 (General)**。
 2. 向下滚动到 "你的应用 (Your apps)"，点击 **Web `</>`** 图标添加一个 Web 应用。
-3. 给应用起个名字（比如 AccVault）并注册。
+3. 给应用起个名字（比如 LLM AutoBot）并注册。
 4. 注册后，屏幕上会出现一段带有 `firebaseConfig` 的代码块。
 5. 回到你的本地代码目录，找到 `firebase-applet-config.example.json` 文件，并将其重命名为 `firebase-applet-config.json`。
 6. 打开 `firebase-applet-config.json`，把从网页上复制的键值对替换进去：
@@ -78,7 +78,7 @@ AccVault 完全依托免费的 Firebase Firestore 来存储账号和代理数据
 
 如果你打算使用软件自带的“一键注册账号”功能，请配置 Python 环境。
 
-在 `AccVault` 目录下打开一个新的终端，运行：
+在 `LLM AutoBot` 目录下打开一个新的终端，运行：
 ```bash
 pip install playwright requests
 playwright install chromium
@@ -115,7 +115,7 @@ npm run electron:dev
 npm run pack
 ```
 
-打包需要几分钟时间，完成后，你会在 `release/AccVault-win32-x64/` 目录下找到 `AccVault.exe`。你可以直接打包压缩这个文件夹发给任何人使用！
+打包需要几分钟时间，完成后，你会在 `release/LLM AutoBot-win32-x64/` 目录下找到 `LLM AutoBot.exe`。你可以直接打包压缩这个文件夹发给任何人使用！
 
 ---
 

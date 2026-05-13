@@ -1,8 +1,8 @@
-# AccVault 🛡️
+# LLM AutoBot 🛡️
 
 [![English](https://img.shields.io/badge/Language-English-blue)](#) [![简体中文](https://img.shields.io/badge/Language-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-red)](README_zh-CN.md)
 
-AccVault is a modern, Apple macOS-inspired desktop application for managing API accounts, routing API traffic, proxy networks, and automating account registration via an integrated Python Playwright engine.
+LLM AutoBot is a modern, Apple macOS-inspired desktop application for managing API accounts, routing API traffic, proxy networks, and automating account registration via an integrated Python Playwright engine.
 
 ## ✨ Features
 
@@ -42,7 +42,7 @@ npm install
 
 ### 3. Firebase Configuration (Database)
 
-AccVault uses Firebase Firestore to store accounts and proxies. You need to create your own free Firebase project.
+LLM AutoBot uses Firebase Firestore to store accounts and proxies. You need to create your own free Firebase project.
 
 **Step 3.1: Create a Project**
 1. Go to the [Firebase Console](https://console.firebase.google.com/).
@@ -57,7 +57,7 @@ AccVault uses Firebase Firestore to store accounts and proxies. You need to crea
 **Step 3.3: Get Web Configuration**
 1. Go to **Project Settings** (the gear icon on the top left) -> **General**.
 2. Scroll down to "Your apps" and click the **Web `</>`** icon to add a web app.
-3. Register the app (name it "AccVault").
+3. Register the app (name it "LLM AutoBot").
 4. Firebase will show you a configuration object (`firebaseConfig`).
 5. In your local project folder, rename `firebase-applet-config.example.json` to `firebase-applet-config.json`.
 6. Open `firebase-applet-config.json` and replace the placeholder values with the values from your Firebase console:
@@ -78,7 +78,7 @@ AccVault uses Firebase Firestore to store accounts and proxies. You need to crea
 
 If you plan to use the automated account registration feature, you must set up the Python environment.
 
-Open a new terminal in the `AccVault` directory and run:
+Open a new terminal in the `LLM AutoBot` directory and run:
 ```bash
 pip install playwright requests
 playwright install chromium
@@ -115,7 +115,7 @@ To build the final standalone executable for Windows:
 npm run pack
 ```
 
-Once the process finishes, you will find `AccVault.exe` inside the `release/AccVault-win32-x64/` directory. You can distribute this folder to anyone.
+Once the process finishes, you will find `LLM AutoBot.exe` inside the `release/LLM AutoBot-win32-x64/` directory. You can distribute this folder to anyone.
 
 ---
 

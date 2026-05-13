@@ -84,7 +84,7 @@ export default {
     pausedMsg: 'Paused: Waiting for manual verification...',
   },
   login: {
-    title: 'AccVault',
+    title: 'LLM AutoBot',
     desc: 'Securely manage your API accounts & proxies',
     signIn: 'Sign in with Google',
     signInTab: 'Sign In',
@@ -141,7 +141,7 @@ export default {
     step3Title: 'Extract API Key',
     step3Desc: 'Automatically extract API Key / Token after registration',
     step4Title: 'Sync to Pool',
-    step4Desc: 'Push to AccVault account pool via Webhook',
+    step4Desc: 'Push to LLM AutoBot account pool via Webhook',
     botScript: 'Bot Script Template',
     botScriptDesc: 'Download this Python script, customize the registration flow and run',
     copyScript: 'Copy Script',

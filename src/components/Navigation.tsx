@@ -34,9 +34,9 @@ export function Navigation({ mobileOpen, onMobileToggle }: { mobileOpen?: boolea
       {/* Logo */}
       <div className="p-5 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-gradient-to-br from-[#0A84FF] to-[#5E5CE6] rounded-xl flex items-center justify-center font-bold text-white text-[13px] shadow-[0_2px_8px_rgba(10,132,255,0.25)]">A</div>
+          <div className="w-8 h-8 bg-gradient-to-br from-[#0A84FF] to-[#5E5CE6] rounded-xl flex items-center justify-center font-bold text-white text-[13px] shadow-[0_2px_8px_rgba(10,132,255,0.25)]">L</div>
           <div>
-            <h1 className="text-[15px] font-semibold text-[#F5F5F7] tracking-tight">AccVault</h1>
+            <h1 className="text-[15px] font-semibold text-[#F5F5F7] tracking-tight">LLM AutoBot</h1>
           </div>
         </div>
         {onMobileToggle && (
@@ -65,7 +65,7 @@ export function Navigation({ mobileOpen, onMobileToggle }: { mobileOpen?: boolea
 
       {/* Version */}
       <div className="p-4 text-center">
-        <p className="text-[11px] text-[#48484A]">AccVault v1.2</p>
+        <p className="text-[11px] text-[#48484A]">LLM AutoBot v1.2</p>
       </div>
     </>
   );

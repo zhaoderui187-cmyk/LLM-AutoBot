@@ -84,7 +84,7 @@ export default {
     pausedMsg: '已暂停：等待人工验证...',
   },
   login: {
-    title: 'AccVault',
+    title: 'LLM AutoBot',
     desc: '安全管理你的 API 账号与代理网络',
     signIn: '使用 Google 登录',
     signInTab: '登录',
@@ -141,7 +141,7 @@ export default {
     step3Title: '获取 API Key',
     step3Desc: '注册成功后自动提取 API Key / Token',
     step4Title: '同步入池',
-    step4Desc: '通过 Webhook 自动推送到 AccVault 账号池',
+    step4Desc: '通过 Webhook 自动推送到 LLM AutoBot 账号池',
     botScript: 'Bot 脚本模板',
     botScriptDesc: '下载此 Python 脚本，自定义注册流程后运行',
     copyScript: '复制脚本',
