@@ -35,8 +35,8 @@ Before you begin, ensure you have the following installed:
 ### 2. Clone the Repository
 
 ```bash
-git clone https://github.com/zhaoderui187-cmyk/AccVault.git
-cd AccVault
+git clone https://github.com/zhaoderui187-cmyk/LLM-AutoBot.git
+cd LLM-AutoBot
 npm install
 ```
 

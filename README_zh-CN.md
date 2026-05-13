@@ -35,8 +35,8 @@ LLM AutoBot 是一款现代化的、基于 Apple macOS 设计风格的桌面应�
 ### 2. 克隆代码仓库
 
 ```bash
-git clone https://github.com/zhaoderui187-cmyk/AccVault.git
-cd AccVault
+git clone https://github.com/zhaoderui187-cmyk/LLM-AutoBot.git
+cd LLM-AutoBot
 npm install
 ```
 
