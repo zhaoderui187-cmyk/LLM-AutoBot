@@ -1,0 +1,179 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Validation Helpers ---
+
+    function isValidAccountCreate(data) {
+      return data.keys().hasAll(['userId', 'platform', 'email', 'status', 'createdAt', 'updatedAt']) 
+        && data.keys().size() >= 6 && data.keys().size() <= 8
+        && data.userId == request.auth.uid
+        && data.platform is string && data.platform.size() > 0 && data.platform.size() <= 100
+        && data.email is string && data.email.size() > 0 && data.email.size() <= 200
+        && data.status in ['active', 'banned', 'exhausted', 'pending']
+        && data.createdAt == request.time
+        && data.updatedAt == request.time
+        && (data.get('password', '') is string && data.get('password', '').size() <= 200)
+        && (data.get('apiKey', '') is string && data.get('apiKey', '').size() <= 200);
+    }
+
+    function isValidAccountUpdate(data) {
+      return data.userId == request.auth.uid // owner unchanged
+        && data.updatedAt == request.time
+        && (data.get('platform', 'a') is string && data.get('platform', 'a').size() <= 100)
+        && (data.get('email', 'a') is string && data.get('email', 'a').size() <= 200)
+        && (data.get('status', 'a') in ['active', 'banned', 'exhausted', 'pending'])
+        && (data.get('password', '') is string && data.get('password', '').size() <= 200)
+        && (data.get('apiKey', '') is string && data.get('apiKey', '').size() <= 200);
+    }
+
+    function isValidProxyCreate(data) {
+      return data.keys().hasAll(['userId', 'ip', 'port', 'status', 'createdAt'])
+        && data.keys().size() >= 5 && data.keys().size() <= 7
+        && data.userId == request.auth.uid
+        && data.ip is string && data.ip.size() > 0 && data.ip.size() <= 100
+        && data.port is string && data.port.size() > 0 && data.port.size() <= 10
+        && data.status in ['active', 'inactive']
+        && data.createdAt == request.time
+        && (data.get('username', '') is string && data.get('username', '').size() <= 100)
+        && (data.get('password', '') is string && data.get('password', '').size() <= 100);
+    }
+    
+    function isValidProxyUpdate(data) {
+      return data.userId == request.auth.uid
+        && (data.get('ip', 'a') is string && data.get('ip', 'a').size() <= 100)
+        && (data.get('port', 'a') is string && data.get('port', 'a').size() <= 10)
+        && (data.get('status', 'a') in ['active', 'inactive'])
+        && (data.get('username', '') is string && data.get('username', '').size() <= 100)
+        && (data.get('password', '') is string && data.get('password', '').size() <= 100);
+    }
+
+    function isValidTaskCreate(data) {
+      return data.keys().hasAll(['userId', 'name', 'status', 'createdAt', 'updatedAt'])
+        && data.keys().size() >= 5 && data.keys().size() <= 6
+        && data.userId == request.auth.uid
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 200
+        && data.status in ['running', 'completed', 'failed', 'manual_action_required']
+        && data.createdAt == request.time
+        && data.updatedAt == request.time
+        && (data.get('logs', '') is string && data.get('logs', '').size() <= 10000);
+    }
+
+    function isValidTaskUpdate(data) {
+      return data.userId == request.auth.uid
+        && data.updatedAt == request.time
+        && (data.get('name', 'a') is string && data.get('name', 'a').size() <= 200)
+        && (data.get('status', 'a') in ['running', 'completed', 'failed', 'manual_action_required'])
+        && (data.get('logs', '') is string && data.get('logs', '').size() <= 10000);
+    }
+
+    function isValidVaultRoutingCreate(data) {
+      return data.keys().hasAll(['userId', 'backendSecret', 'accounts', 'updatedAt'])
+        && data.keys().size() >= 4 && data.keys().size() <= 7
+        && data.userId == request.auth.uid
+        && data.backendSecret is string && data.backendSecret.size() > 10 && data.backendSecret.size() <= 100
+        && data.accounts is list && data.accounts.size() <= 1000
+        && data.updatedAt == request.time;
+    }
+
+    function isValidVaultRoutingUpdate(data) {
+      return data.updatedAt == request.time
+        && data.accounts is list && data.accounts.size() <= 1000;
+    }
+
+    // --- Routes ---
+
+    // SECURITY FIX: vaultRouting no longer allows unauthenticated reads.
+    // Server-side operations use Firebase Admin SDK which bypasses these rules.
+    match /vaultRouting/{vaultKey} {
+      allow get: if isSignedIn() && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      
+      allow create: if isSignedIn() && isValidId(vaultKey) && isValidVaultRoutingCreate(incoming());
+      
+      // Only authenticated owner can update via client SDK.
+      // Server-side updates (account status changes, webhook syncs) use Admin SDK.
+      allow update: if isSignedIn() && isValidId(vaultKey) 
+        && existing().userId == request.auth.uid
+        && incoming().userId == existing().userId
+        && incoming().backendSecret == existing().backendSecret
+        && isValidVaultRoutingUpdate(incoming())
+        && incoming().diff(existing()).affectedKeys().hasOnly(['accounts', 'updatedAt', 'proxies', 'strategy']);
+      
+      allow delete: if isSignedIn() && isValidId(vaultKey) && existing().userId == request.auth.uid;
+    }
+
+    match /accounts/{accountId} {
+      allow get: if isSignedIn() && isValidId(accountId) && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      
+      allow create: if isSignedIn() && isValidId(accountId) && isValidAccountCreate(incoming());
+      
+      allow update: if isSignedIn() && isValidId(accountId) && existing().userId == request.auth.uid 
+        && isValidAccountUpdate(incoming())
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['platform', 'email', 'password', 'status', 'apiKey', 'updatedAt'])
+        );
+        
+      allow delete: if isSignedIn() && isValidId(accountId) && existing().userId == request.auth.uid;
+    }
+
+    match /proxies/{proxyId} {
+      allow get: if isSignedIn() && isValidId(proxyId) && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      
+      allow create: if isSignedIn() && isValidId(proxyId) && isValidProxyCreate(incoming());
+      
+      allow update: if isSignedIn() && isValidId(proxyId) && existing().userId == request.auth.uid 
+        && isValidProxyUpdate(incoming())
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['ip', 'port', 'username', 'password', 'status'])
+        );
+        
+      allow delete: if isSignedIn() && isValidId(proxyId) && existing().userId == request.auth.uid;
+    }
+
+    match /tasks/{taskId} {
+      allow get: if isSignedIn() && isValidId(taskId) && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      
+      allow create: if isSignedIn() && isValidId(taskId) && isValidTaskCreate(incoming());
+      
+      allow update: if isSignedIn() && isValidId(taskId) && existing().userId == request.auth.uid 
+        && isValidTaskUpdate(incoming())
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['name', 'status', 'logs', 'updatedAt'])
+        );
+        
+      allow delete: if isSignedIn() && isValidId(taskId) && existing().userId == request.auth.uid;
+    }
+  }
+}

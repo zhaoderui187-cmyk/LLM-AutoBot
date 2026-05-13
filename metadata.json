@@ -1,0 +1,6 @@
+{
+  "name": "AccVault: 个人 API 实验室",
+  "description": "专为开发者设计的个人 API 中转站与账号自动化管理系统，支持多账号轮询、指纹对抗脚本管理及 API 状态实时监控。",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

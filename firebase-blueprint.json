@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "Account": {
+      "title": "Account",
+      "description": "API Account managed by the system",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner of the account" },
+        "platform": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "banned", "exhausted", "pending"] },
+        "apiKey": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "platform", "email", "status", "createdAt", "updatedAt"]
+    },
+    "Proxy": {
+      "title": "Proxy",
+      "description": "Proxy IP configuration",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "ip": { "type": "string" },
+        "port": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "ip", "port", "status", "createdAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Automation task log",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "type": "string", "enum": ["running", "completed", "failed", "manual_action_required"] },
+        "logs": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "name", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/accounts/{accountId}": {
+      "schema": { "$ref": "#/entities/Account" },
+      "description": "API Accounts"
+    },
+    "/proxies/{proxyId}": {
+      "schema": { "$ref": "#/entities/Proxy" },
+      "description": "Proxy configurations"
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Automation tasks"
+    }
+  }
+}
