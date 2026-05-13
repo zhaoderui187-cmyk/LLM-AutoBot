@@ -8,9 +8,10 @@ LLM AutoBot is a modern, Apple macOS-inspired desktop application for managing A
 
 - **macOS-Inspired UI**: Beautiful glassmorphism sidebar, dark-themed containers, Apple Blue (`#0A84FF`) accents, and smooth animations.
 - **API Gateway**: Route requests dynamically across multiple API keys based on availability, rate limits, and proxy health.
-- **AutoBot Engine**: Integrated Python script runner for automating account registration (e.g., OpenAI, Claude). Logs output directly to the desktop app.
 - **Account & Proxy Pool**: Store API keys safely and assign them proxies to avoid IP bans.
 - **Built-in Backend**: Runs an Express server inside the Electron app for Webhook listening and API routing.
+- **AutoBot Engine (Framework Only)**: Integrated Python script runner for automating account registration. 
+  > ⚠️ **Disclaimer**: The AutoBot is provided as an empty framework. It does **NOT** contain scripts to bypass security checks of specific platforms like OpenAI. **You are expected to manually register your accounts** and add the API keys to the system, or write your own automation logic.
 
 ## 🚀 Tech Stack
 
