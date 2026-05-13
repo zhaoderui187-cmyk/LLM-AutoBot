@@ -1,7 +1,14 @@
 {
-  "name": "react-example",
-  "private": true,
-  "version": "0.0.0",
+  "name": "accvault",
+  "version": "1.0.0",
+  "description": "AccVault - API Account Manager & Automation Engine",
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhaoderui187-cmyk/AccVault.git"
+  },
   "type": "module",
   "main": "electron/main.js",
   "scripts": {
